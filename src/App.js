@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/login';
 import Newfriends from './components/newfriends';
 import Nav from './components/nav';
+import Chatbot from './components/chatbot';
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Login />}/>
           <Route path='/chat' element={<ChatApp/>}/>
           <Route path='/friends' element={<Newfriends/>}/>
+          <Route path='/chatbot' element={<Chatbot/>}/>
           
         </Routes>
       </BrowserRouter>

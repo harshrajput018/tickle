@@ -101,12 +101,19 @@ const ConversationList = ({ selectedConversation, onConversationSelect }) => {
   return (
 
     <div id='list' className="conversation-list">
+      
+        <a href="/chatbot" style={{textDecoration:'none', color:'white',backgroundColor:'orange'}}>
+        <div style={{margin:'15px',fontWeight:'800', background:'royalblue', fontSize:'1rem',padding:'5px', color:'white', borderRadius:'5px',textAlign:'center' }} onMouseEnter={(e)=>{
+        e.target.style.cursor='pointer'
+      }}>CareBot</div></a>
       {allfriends === false && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', flexDirection:'column' }}>
         <div className="loader"></div>
         
       </div>}
       {allfriends.length > 0 ?
         <div>
+
+          
 
 
 

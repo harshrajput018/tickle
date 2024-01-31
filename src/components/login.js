@@ -12,21 +12,32 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [count,setCount]= useState(0);
+    const [c,changeToBlock]= useState('block');
+
     useEffect(()=>{
         if(localStorage.getItem('token'))
         {
             navigate('/chat')
         }
     },[])
-   
 
-    useEffect(() => {
-        if (localStorage.getItem('logoutFlag') === 'true')
+    useEffect(()=>{
+        if(c=='none')
+        changeToBlock('block')
+    },[c])
+   useEffect(()=>{
+
+    if (localStorage.getItem('badcredentials') === 'true')
             setTimeout(() => {
-                localStorage.removeItem('logoutFlag');
-                document.getElementById('msg').style.display='none' // Trigger re-render to remove the message
+                localStorage.removeItem('badcredentials');
+                changeToBlock('none')
+                
             }, 2000);
-    }, [])
+
+   },[count])
+
+    
 
 
 
@@ -37,6 +48,22 @@ const Login = () => {
         email: '',
         password: '',
     });
+
+    useEffect(() => {
+        if (localStorage.getItem('logoutFlag') === 'true')
+            setTimeout(() => {
+                localStorage.removeItem('logoutFlag');
+                document.getElementById('msg').style.display='none' // Trigger re-render to remove the message
+            }, 2000);
+
+        if(localStorage.getItem('signup') === 'true')
+        {
+            setTimeout(() => {
+                localStorage.removeItem('signup');
+                document.getElementById('msg1').style.display='none' // Trigger re-render to remove the message
+            }, 2000);
+        }
+    }, [activeForm])
 
     const toggleForm = () => {
         setActiveForm(activeForm === 'login' ? 'signup' : 'login');
@@ -61,13 +88,17 @@ const Login = () => {
                         email: '',
                         password: '',
                     })
-                    localStorage.setItem('logoutFlag','true');
+                    localStorage.setItem('signup','true');
                     
                 }
-            })
+                })
+
+            
         else {
 
-            fetch('https://mern-api-9vf7.onrender.com/allusers/login', {
+            localStorage.setItem('user',formData.username)
+
+            fetch('http://localhost:9000/allusers/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,9 +108,18 @@ const Login = () => {
                 if (res.token) {
                     localStorage.setItem('token', res.token);
                     navigate('/chat')
+
+                    
+                }
+                else{
+                    
+                    localStorage.setItem('badcredentials','true')
+                    console.log('error',localStorage.getItem('badcredentials'))
+                    setCount(count+1);
                 }
             });
 
+            
 
         }
 
@@ -97,9 +137,7 @@ const Login = () => {
 
     return (
         <div className="home-page">
-            {(localStorage.getItem('logoutFlag') == 'true') && <div onClick={()=>{setTimeout(()=>{
-                document.getElementById('msg').style.display='none'
-            },3000)}} id='msg' style={{
+            {(localStorage.getItem('logoutFlag') == 'true') && <div  id='msg' style={{
                 background: '#63a69f',
                 color: '#fff',
                 padding: '10px',
@@ -113,6 +151,38 @@ const Login = () => {
                 fontFamily: 'Arial, sans-serif',
             }}>
                 Successfully Logged Out
+            </div>}
+      {(localStorage.getItem('signup') == 'true') && <div  id='msg1' style={{
+                background: '#63a69f',
+                color: '#fff',
+                padding: '10px',
+                textAlign: 'center',
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                zIndex: '999',
+                animation: 'slideIn 0.5s ease-in-out',
+                fontFamily: 'Arial, sans-serif',
+            }}>
+                Successfully Signed Up
+            </div>}
+            {(localStorage.getItem('badcredentials') == 'true') && <div  id='msg2' style={{
+                display:c,
+                background: 'red',
+                color: '#fff',
+                padding: '10px',
+                textAlign: 'center',
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                fontWeight:'700',
+                zIndex: '999',
+                animation: 'slideIn 0.5s ease-in-out',
+                fontFamily: 'Arial, sans-serif',
+            }}>
+                Wrong Credentials
             </div>}
             <div className="form-container">
                 <div className="form-tabs">

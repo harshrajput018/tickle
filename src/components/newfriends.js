@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 
 export default function NewFriends() {
     
-    const [loader, setloader] = useState(false);
+    
    
 
     console.log('new')

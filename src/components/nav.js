@@ -12,7 +12,7 @@ export default function Nav() {
             {
                 localStorage.getItem('token') ? <nav style={{display:'flex', justifyContent:'space-between', width:'100%', padding:'0.5rem 2rem' }} class="navbar navbar-expand-lg navbar-light bg-light">
 
-                <div style={{display:'flex',justifyContent:'space-between',width:'100%', }}> <a style={{fontFamily:'cursive', fontSize:'2rem', fontWeight:'600', color:'teal'}}class="navbar-brand" href="#">ConnectWell</a>
+                <div style={{display:'flex',justifyContent:'space-between',width:'100%', }}> <a style={{fontFamily:'cursive', fontSize:'2rem', fontWeight:'600', color:'teal'}}class="navbar-brand" href="#">Connect Well</a>
                 <div>
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -34,6 +34,7 @@ export default function Nav() {
                     <li class="nav-item">
                       <a class="nav-link" href="/friends">Friends</a>
                     </li>
+                    
                     <li class="nav-item">
                       <a class="nav-link" onClick={()=>{localStorage.removeItem('token');
                       localStorage.setItem('logoutFlag',true)} }
